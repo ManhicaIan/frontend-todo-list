@@ -1,9 +1,12 @@
+import Menu from './components/menu/Menu'
 
 function App() {
 
   return (
     <>
-     <h1>App</h1>
+      <div className="p-5 h-full bg-white font-['Poppins']" >
+        <Menu />
+      </div>
     </>
   )
 }
