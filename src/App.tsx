@@ -1,18 +1,23 @@
+import { Routes, Route } from 'react-router-dom'
 import Menu from './components/menu/Menu'
-import Task from './components/task/TaskForm'
+
 import Today from './components/today/Today'
 
+import { useEffect } from 'react'
+
 function App() {
+  
+  
 
   return (
     <>
       <div className="p-5 h-full bg-white font-['Poppins'] flex justify-between" >
-        <Menu />
-        <Today />
-        <Task />
-      </div>
 
-      
+        <Routes>
+          <Route path='/' element={<> <Menu /> <Today /> </>} />
+          <Route path='*' element={<h1 className='font-black text-3xl'>404 - Not Found</h1>}/>
+        </Routes>
+      </div>
     </>
   )
 }

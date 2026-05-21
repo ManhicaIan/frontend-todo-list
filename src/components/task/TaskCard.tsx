@@ -2,24 +2,29 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGreaterThan, faCalendarXmark } from '@fortawesome/free-solid-svg-icons'
 import React from 'react'
 
-const TaskCard = () => {
+interface TaskCardProps{
+    title: string,
+    due_date: Date
+}
+
+const TaskCard = ({ title, due_date}: TaskCardProps) => {
     return (
         <div className='text-[14px]'>
             <div className="w-full flex items-center">
-                <input type="checkbox" className='-mt-5 mr-5' />
+                <input type="checkbox" className='-mt-[22px] mr-5' />
                 <div className='w-full'>
                     <div className="w-full flex justify-between items-center">
-                        <p>Title</p>
+                        <p>{title}</p>
                         <FontAwesomeIcon icon={faGreaterThan} className='cursor-pointer text-[10px] ' />
                     </div>
                     
                     <div className="w-full mt-2 flex items-center">
                         <FontAwesomeIcon icon={faCalendarXmark} />
-                        <p className='ml-2 text-[10px]'>22-06-2026</p>
+                        <p className='ml-2 text-[10px]'>{due_date}</p>
                     </div>
                 </div>
             </div>
-            
+            <hr className='mt-2 mb-2 border-gray-300'/>
         </div>
     )
 }
