@@ -1,7 +1,10 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars, faMagnifyingGlass, faGreaterThan, faListCheck, faCalendarDays, faNoteSticky, faSliders, faRightFromBracket } from '@fortawesome/free-solid-svg-icons'
 
-const Menu = () => {
+interface TaskLength{
+  taskLength: number;
+}
+const Menu = ({taskLength}: TaskLength) => {
   return (
     <div className='p-4 h-full w-[20%] bg-gray-50 rounded-2xl flex flex-col text-gray-900' >
       <div className='flex justify-between items-center'>
@@ -32,7 +35,7 @@ const Menu = () => {
             </div>
             <p>Today</p>
           </div>
-          <p className='w-10 h-5 bg-gray-200 font-bold text-[12px] text-center p-0.5 rounded-[5px] flex justify-center items-center group-hover:bg-white'>5</p>
+          <p className='w-10 h-5 bg-gray-200 font-bold text-[12px] text-center p-0.5 rounded-[5px] flex justify-center items-center group-hover:bg-white'>{taskLength}</p>
         </div>
         <div>
           <div className='flex items-center justify-start hover:bg-gray-200 p-2 hover:rounded-[5px] hover:font-bold cursor-pointer'>
