@@ -1,6 +1,6 @@
 export async function fetchData(setData:Function){
     try {
-        const response = await fetch("https://api-todo-list-od5s.onrender.com/api/v1/task");
+        const response = await fetch("http://localhost:8080/api/v1/task");
         if (!response.ok) throw new Error("Error while fetching data");
 
         const data = await response.json();
@@ -29,7 +29,7 @@ interface ApiErrorResponse {
 
 export async function addTask(data: TaskData) {
     const response = await fetch(
-        'https://api-todo-list-od5s.onrender.com/api/v1/task',
+        'http://localhost:8080/api/v1/task',
         {
             method: 'POST',
             headers: {
