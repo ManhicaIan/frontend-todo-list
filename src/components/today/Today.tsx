@@ -9,7 +9,7 @@ import { useTaskContext } from "../../context/TaskContext";
 
 const Today = () => {
   const [task, setTask] = useState<FormData[]>([]);
-  const [active, setActive] = useState(false);
+  const {showTaskForm,setShowTaskForm} = useTaskContext();
 
   const { todayTotalTasks, setTodayTotalTasks } = useTaskContext();
   setTodayTotalTasks(task.length);
@@ -18,12 +18,10 @@ const Today = () => {
     fetchData(setTask);
   }, []);
 
-  const handleOpenTaskForm = () => {
-    setActive(true);
+  const handleShowTaskForm = () => {
+    setShowTaskForm(!showTaskForm);
   };
-  const handleCloseTaskForm = () => {
-    setActive(false);
-  };
+
   return (
     <>
       <div className="w-[80%] p-5 font-medium text-gray-900 flex justify-between">
@@ -36,7 +34,7 @@ const Today = () => {
           </div>
           <div
             className="mt-10 p-3 border border-gray-200 rounded-[5px] hover:cursor-pointer hover:bg-gray-100 "
-            onClick={handleOpenTaskForm}
+            onClick={handleShowTaskForm}
           >
             <button className="flex items-center hover:cursor-pointer">
               <FontAwesomeIcon
@@ -55,13 +53,6 @@ const Today = () => {
               />
             ))}
           </div>
-        </div>
-        <div className={active ? "block" : "hidden"}>
-          <TaskForm
-            addTask={addTask}
-            setTask={setTask}
-            closeTaskForm={handleCloseTaskForm}
-          />
         </div>
       </div>
     </>
