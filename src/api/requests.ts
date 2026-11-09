@@ -1,59 +1,26 @@
-export async function fetchData(setData:Function){
-    try {
-        const response = await fetch("http://localhost:8080/api/v1/task");
-        if (!response.ok) throw new Error("Error while fetching data");
+import { type Task } from "../types";
+import api from "./axios";
+import endpoints from "./endpoints";
 
-        const data = await response.json();
-        setData(data);
-    } catch (error) {
-        console.log(error);
-        
-    }
-}
-
-interface TaskData {
-    title: string;
-    description: string;
-}
-
-interface ValidationError {
-    field: string;
-    message: string;
-}
-
-interface ApiErrorResponse {
-    error: string;
-    errors?: ValidationError[];
-    status: number;
-}
-
-export async function addTask(data: TaskData) {
-    const response = await fetch(
-        'http://localhost:8080/api/v1/task',
-        {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-        }
-    );
-
-    if (!response.ok) {
-        const errorData: ApiErrorResponse = await response.json();
-
-        if (response.status === 422 && errorData.errors) {
-            const fieldErrors: Record<string, string> = {};
-
-            errorData.errors.forEach(({ field, message }) => {
-                fieldErrors[field] = message;
-            });
-
-            throw fieldErrors;
-        }
-
-        throw { general: errorData.error ?? `Erro ${response.status}` };
-    }
-
-    return await response.json();
-}
+export const requests = {
+  getAllTasks: async () => {
+    const res = await api.get<Task[]>(endpoints.tasks.base);
+    return res.data;
+  },
+  getTaskById: async (id: string) => {
+    const res = await api.get<Task>(endpoints.tasks.byId(id));
+    return res.data;
+  },
+  saveTask: async (task: Task) => {
+    const res = await api.post<Task>(endpoints.tasks.base, task);
+    return res.data;
+  },
+  updateTask: async (id: string, task: Task) => {
+    const res = await api.put<Task>(endpoints.tasks.byId(id), task);
+    return res.data;
+  },
+  completeTask: async (id: string) => {
+    const res = await api.post<Task>(endpoints.tasks.complete(id));
+    return res.data;
+  },
+};

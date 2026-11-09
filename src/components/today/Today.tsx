@@ -2,21 +2,18 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import React, { useEffect, useState } from "react";
 import TaskCard from "../task/TaskCard";
-import { addTask, fetchData } from "../../api/requests";
 import TaskForm from "../task/TaskForm";
 import { useTaskContext } from "../../context/TaskContext";
+import { useTasks } from "../../hooks/useTodos";
 
 
 const Today = () => {
-  const [task, setTask] = useState<FormData[]>([]);
+  const {data: tasks} = useTasks();
   const {showTaskForm,setShowTaskForm} = useTaskContext();
 
   const { todayTotalTasks, setTodayTotalTasks } = useTaskContext();
-  setTodayTotalTasks(task.length);
+  setTodayTotalTasks(tasks?.length as number);
 
-  useEffect(() => {
-    fetchData(setTask);
-  }, []);
 
   const handleShowTaskForm = () => {
     setShowTaskForm(!showTaskForm);
@@ -45,7 +42,7 @@ const Today = () => {
             </button>
           </div>
           <div className="mt-5 text-[13px] font-medium">
-            {task.map((task) => (
+            {tasks?.map((task) => (
               <TaskCard
                 key={task.id}
                 title={task.title}
