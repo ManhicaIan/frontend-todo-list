@@ -1,8 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import React, { useEffect, useState } from "react";
 import TaskCard from "../task/TaskCard";
-import TaskForm from "../task/TaskForm";
 import { useTaskContext } from "../../context/TaskContext";
 import { useTasks } from "../../hooks/useTodos";
 

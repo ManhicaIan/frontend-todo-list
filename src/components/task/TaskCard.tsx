@@ -1,6 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGreaterThan, faCalendarXmark } from '@fortawesome/free-solid-svg-icons'
-import React from 'react'
 
 interface TaskCardProps{
     title: string,

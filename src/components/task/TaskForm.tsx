@@ -3,12 +3,8 @@ import { faX } from "@fortawesome/free-solid-svg-icons";
 import { useForm, type SubmitHandler } from "react-hook-form";
 
 import { useTaskContext } from "../../context/TaskContext";
-interface FormFields {
-  id?: string;
-  title: string;
-  description: string;
-  due_date: string;
-}
+import { useSaveTask } from "../../hooks/useTodos";
+import type { Task } from "../../types";
 
 function TaskForm() {
   const { showTaskForm, setShowTaskForm } = useTaskContext();
@@ -16,13 +12,14 @@ function TaskForm() {
   const {
     register,
     handleSubmit,
-    setError,
+    reset,
     formState: { errors, isSubmitting },
-  } = useForm<FormFields>();
+  } = useForm<Task>();
 
-  const onSubmit: SubmitHandler<FormFields> = async (data) => {
-
-   
+  const {mutate, isPending} = useSaveTask()
+  const onSubmit: SubmitHandler<Task> = async (data) => {
+    if(data.title.trim() && data.description.trim())
+      return mutate(data, {onSuccess: () => reset()})
   };
 
   const handleShowTaskForm = () => {
@@ -58,9 +55,7 @@ function TaskForm() {
                 })}
                 type="text"
                 name="title"
-                // value={formData.title}
                 placeholder="Title"
-                // onChange={handleInputChange}
                 className="w-full p-2 border border-gray-300 rounded-[5px] focus:border-red-300 text-[14px]"
               />
             </div>
@@ -80,8 +75,6 @@ function TaskForm() {
                 })}
                 placeholder="Description"
                 name="description"
-                // value={formData.description}
-                // onChange={handleInputChange}
                 className="w-full h-28 p-3  border border-gray-300 rounded-[5px] resize-none outline-none text-[14px]"
               ></textarea>
             </div>
@@ -104,8 +97,6 @@ function TaskForm() {
                 })}
                 type="datetime-local"
                 name="due_date"
-                // value={formData.due_date}
-                // onChange={handleInputChange}
               />
             </div>
             <div className='mt-auto flex justify-around text-[13px] font-medium'>
@@ -113,7 +104,7 @@ function TaskForm() {
                 disabled={isSubmitting}
                 className='flex items-center bg-amber-300 hover:bg-amber-200 p-2 font-bold cursor-pointer border rounded-[5px] disabled:bg-amber-200 disabled:cursor-auto'
               >
-                {isSubmitting ? 'Loading ...' : 'Save Task'}
+                {isPending ? 'Loading ...' : 'Save Task'}
               </button>
             </div>
           </form>
