@@ -9,8 +9,7 @@ const Today = () => {
   const {data: tasks} = useTasks();
   const {showTaskForm,setShowTaskForm} = useTaskContext();
 
-  const { todayTotalTasks, setTodayTotalTasks } = useTaskContext();
-  setTodayTotalTasks(tasks?.length as number);
+  const todayTotalTasks = tasks?.length ?? 0;
 
 
   const handleShowTaskForm = () => {
@@ -19,7 +18,7 @@ const Today = () => {
 
   return (
     <>
-      <div className="w-[80%] p-5 font-medium text-gray-900 flex justify-between">
+      <div className="w-full p-5 font-medium text-gray-900 flex justify-between">
         <div className="w-full pr-5  overflow-y-scroll">
           <div className="flex items-center text-4xl font-bold">
             <h1 className="text-[3vw]">Today</h1>
@@ -43,7 +42,9 @@ const Today = () => {
             {tasks?.map((task) => (
               <TaskCard
                 key={task.id}
+                id={task.id}
                 title={task.title}
+                description={task.description}
                 due_date={task.due_date}
               />
             ))}

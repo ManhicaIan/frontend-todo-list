@@ -10,11 +10,15 @@ import {
   faRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
 import { useTaskContext } from "../../context/TaskContext";
+import { useTodayTotalTasks } from "../../hooks/useTodos";
 
 const Menu = () => {
-  const { todayTotalTasks } = useTaskContext();
+  const { isEditing } = useTaskContext();
+  const todayTotalTasks = useTodayTotalTasks();
   return (
-    <div className="p-4 h-full w-[20%] bg-gray-50 rounded-2xl flex flex-col text-gray-900">
+    <div
+      className={`p-4 h-full ${isEditing ? "w-[30%]" : "w-[20%]"} bg-gray-50 rounded-2xl flex flex-col text-gray-900`}
+    >
       <div className="flex justify-between items-center">
         <h3 className="font-bold text-[19px] p-2">Menu</h3>
         <FontAwesomeIcon icon={faBars} className="text-[18px] cursor-pointer" />
